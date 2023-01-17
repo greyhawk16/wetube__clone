@@ -1,0 +1,28 @@
+{
+  "name": "wetube__clone",
+  "version": "1.0.0",
+  "description": "The best way to watch a video",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greyhawk16/wetube__clone.git"
+  },
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/server.js"
+  },
+  "author": "",
+  "license": "greyhawk16 in GitHub",
+  "bugs": {
+    "url": "https://github.com/greyhawk16/wetube__clone/issues"
+  },
+  "homepage": "https://github.com/greyhawk16/wetube__clone#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/node": "^7.20.7",
+    "@babel/preset-env": "^7.20.2",
+    "nodemon": "^2.0.20"
+  }
+}
