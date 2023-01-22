@@ -1,7 +1,10 @@
-extend base.pug
+extend base
+include mixins/video
 
 block content 
     h2 Welcome here you'll see the trending videos
     ul 
-        each vid in videos
-            li=vid
+        each poptato in videos
+            +video(poptato) 
+        else 
+            li Sorry Nothing Found
