@@ -2,9 +2,7 @@ extend base
 include mixins/video
 
 block content 
-    h2 Welcome here you'll see the trending videos
-    ul 
-        each poptato in videos
-            +video(poptato) 
-        else 
-            li Sorry Nothing Found
+    each poptato in videos
+        +video(poptato) 
+    else 
+        li Sorry Nothing Found
