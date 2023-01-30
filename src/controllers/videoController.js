@@ -11,10 +11,10 @@ export const home = async (req, res) => {
 };
   
 
-export const watch = (req, res) => {
+export const watch = async (req, res) => {
     const { id } = req.params;
-    const video = videos[id - 1];
-    return res.render("watch", { pageTitle: `Watching`});
+    const video = await Video.findById(id);
+    return res.render("watch", { pageTitle: video.title, video });
 };
 
 
@@ -36,8 +36,21 @@ export const getUpload = (req, res) => {
 };
 
 
-export const postUpload = (req, res) => {
+export const postUpload = async (req, res) => {
     //add a video to video array
-    const { title } = req.body;
-    return res.redirect("/");
-}
+    const { title, description, hashtags } = req.body;
+    try {
+        await Video.create({
+            title,
+            description,
+            // createdAt: Date.now(),
+            hashtags: hashtags.split(",").map(word => `#${word}`),
+        });
+        return res.redirect("/");
+    } catch (error) {
+        return res.render("upload", {
+            pageTitle: "upload Video",
+            errorMessage: error._message,
+        });
+    }
+};
