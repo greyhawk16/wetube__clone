@@ -17,11 +17,14 @@ app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-    secret: "hello",
+    secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: {
+        maxAge: 20000,
+    },
     store: MongoStore.create({
-        mongoUrl: "mongodb://127.0.0.1:27017/wetube",
+        mongoUrl: process.env.DB_URL,
     }),
     })
 );
