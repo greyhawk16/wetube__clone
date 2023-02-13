@@ -166,20 +166,19 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
     const {
         session: {
-            user: { _id },
+          user: { _id },
         },
         body: { name, email, username, location },
     } = req;
-    await User.findByIdAndUpdate(
-        _id, {
+
+    await User.findByIdAndUpdate(_id, {
         name,
         email,
         username,
-        location
-    }
-    );
+        location,
+    });
 
-    return res.render("edit-profile");
+    return res.redirect("/users/edit");
 };
 export const see = (req, res) => {
     res.send("See User");
