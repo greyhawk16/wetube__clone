@@ -159,9 +159,11 @@ export const logout = (req, res) => {
     return res.redirect("/");
 };
 
+
 export const getEdit = (req, res) => {
     return res.render("edit-profile", { pageTitle: "Edit Proflie" });
 };
+
 
 export const postEdit = async (req, res) => {
     const {
@@ -171,13 +173,45 @@ export const postEdit = async (req, res) => {
         body: { name, email, username, location },
     } = req;
 
-    await User.findByIdAndUpdate(_id, {
+    // curEmail: email before update
+    // curUsername: username before update
+    const curEmail = req.session.user.email; 
+    const curUsername = req.session.user.username;
+
+    // if (updated email) !== (previous email) => email is changed
+    if (email !== curEmail) {
+        // if updated email("email") already exists
+        if (Boolean(await User.exists({ email }))) {
+            // CANNOT use updated email
+            return res.status(400).render("edit-profile", {
+                pageTitle: "Edit Proflie",
+                errorMessage: "This email has been taken. Please try new one :(",
+            });
+        }
+    }
+
+    // if (updated username) !== (previous username) => username is changed
+    if (username !== curUsername) {
+        // if updated username("username") already exists
+        if (Boolean(await User.exists({ username }))) {
+            // CANNOT use the updated username
+            return res.status(400).render("edit-profile", {
+                pageTitle: "Edit Proflie",
+                errorMessage: "Someone is using this username. Please try new one :(",
+            });
+        }
+    }
+
+
+    const updatedUser = await User.findByIdAndUpdate(_id, {
         name,
         email,
         username,
         location,
-    });
-
+        },
+        { new: true }
+    );
+    req.session.user = updatedUser;
     return res.redirect("/users/edit");
 };
 export const see = (req, res) => {
