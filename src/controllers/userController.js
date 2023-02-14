@@ -165,16 +165,16 @@ export const getEdit = (req, res) => {
 };
 
 
+
 export const postEdit = async (req, res) => {
     const {
         session: {
-          user: { _id },
+          user: { _id, avatarUrl },
         },
         body: { name, email, username, location },
-        file
+        file,
     } = req;
     console.log(file);
-
     // curEmail: email before update
     // curUsername: username before update
     const curEmail = req.session.user.email; 
@@ -205,6 +205,7 @@ export const postEdit = async (req, res) => {
     }
 
     const updatedUser = await User.findByIdAndUpdate(_id, {
+        avatarUrl: file ? file.path : avatarUrl,
         name,
         email,
         username,
@@ -217,12 +218,14 @@ export const postEdit = async (req, res) => {
 };
 
 
+
 export const getChangePassword = (req, res) => {
     if (req.session.user.socialOnly) {
         return res.redirect("/");
     }
     return res.render("users/change-password", { pageTitle: "Change Password" });
 };
+
 
 
 export const postChangePassword = async (req, res) => {
