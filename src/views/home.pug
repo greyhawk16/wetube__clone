@@ -2,23 +2,9 @@ extend base
 include mixins/video
 
 block content 
-    div.video__grid
+    div.video-grid
         each poptato in videos
             +video(poptato) 
-            +video(poptato) 
-            +video(poptato) 
-            +video(poptato) 
-            +video(poptato) 
-            +video(poptato) 
-            +video(poptato) 
-            +video(poptato)
-            +video(poptato) 
-            +video(poptato) 
-            +video(poptato) 
-            +video(poptato)
-            +video(poptato) 
-            +video(poptato) 
-            +video(poptato) 
-            +video(poptato)
+            
         else 
-            li Sorry Nothing Found
+            span.empty__message Nothing Found
