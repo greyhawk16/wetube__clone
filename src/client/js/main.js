@@ -1,4 +1,4 @@
 import "../scss/styles.scss";
 
 
-console.log("it works");
+console.log("main");
