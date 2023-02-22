@@ -54,13 +54,15 @@ const handleChangeVolume = (event) => {
     }
 };
 
+const formatTime = (sec) => new Date(sec * 1000).toISOString().substring(11, 19);
+
 
 const handleLoadedMetadata = () => {
-    totalTime.innerText = Math.floor(video.duration);
+    totalTime.innerText = formatTime(Math.floor(video.duration));
 };
 
 const handleTimeUpdate = () => {
-    currentTime.innerText = Math.floor(video.currentTime);
+    currentTime.innerText = formatTime(Math.floor(video.currentTime));
 };
 
 
