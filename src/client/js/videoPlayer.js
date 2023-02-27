@@ -1,16 +1,20 @@
 const video = document.querySelector("video");
 const playBtn = document.getElementById("play");
+const playBtnIcon = playBtn.querySelector("i");
 const muteBtn = document.getElementById("mute");
+const muteBtnIcon = muteBtn.querySelector("i");
 const volumeRange = document.getElementById("volume");
 const currentTime = document.getElementById("currentTime");
 const totalTime = document.getElementById("totalTime");
 const timeline = document.getElementById("timeline");
 const fullScreenBtn = document.getElementById("fullScreen");
+const fullScreenIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const VideoControls = document.getElementById("VideoControls");
 
 
 let controlsTimeout = null;
+let controlsMovementTimeout = null;
 let volumeValue = 0.5
 video.volume = volumeValue;
 
@@ -22,19 +26,22 @@ const handlePlayClick = (e) => {
     } else {
         video.pause()
     }
-    playBtn.innerText = video.paused ? "Play" : "Pause";
+    playBtnIcon.classList = video.paused ? "fas fa-play" : "fas fa-pause";
 };
 
 
 
-const handleMute = (e) => {
+const handleMuteClick = (e) => {
     if (video.muted) {
         video.muted = false;
-        video.volume = volumeValue;
-    } else {
+      } else {
         video.muted = true;
     }
-    muteBtn.innerText = video.muted ? "Unmute" : "Mute";
+    
+    // muteBtn.innerText = video.muted ? "Unmute" : "Mute";
+    muteBtnIcon.classList = video.muted
+        ? "fas fa-volume-mute"
+        : "fas fa-volume-up";
     volumeRange.value = video.muted ? 0 : volumeValue;
 };
     
@@ -68,7 +75,7 @@ const handleChangeVolume = (event) => {
 
 
 
-const formatTime = (sec) => new Date(sec * 1000).toISOString().substring(11, 19);
+const formatTime = (sec) => new Date(sec * 1000).toISOString().substring(14, 19);
 
 const handleLoadedMetadata = () => {
     totalTime.innerText = formatTime(Math.floor(video.duration));
@@ -91,12 +98,15 @@ const handleFullScreen = () => {
     const fullscreen = document.fullscreenElement;
     if (fullscreen) {
         document.exitFullscreen();
-        fullScreenBtn.innerText = "Enter Full Screen";
+        fullScreenIcon.classList = "fas fa-expand";
     } else {
         videoContainer.requestFullscreen();
-        fullScreenBtn.innerText = "Exit Full Screen";
+        fullScreenIcon.classList = "fas fa-compress";
     }
 };
+
+
+const hideControls = () => VideoControls.classList.remove("showing");
 
 
 const handleMouseMove = () => {
@@ -104,24 +114,40 @@ const handleMouseMove = () => {
         clearTimeout(controlsTimeout);
         controlsTimeout = null;
     }
+    if (controlsMovementTimeout) {
+        clearTimeout(controlsMovementTimeout);
+        controlsMovementTimeout = null;
+    }
+
     VideoControls.classList.add("showing");
+    controlsMovementTimeout = setTimeout(hideControls, 3000);
 };
+
+
 const handleMouseLeave = () => {
-    controlsTimeout = setTimeout(() => {
-        VideoControls.classList.remove("showing");
-    }, 3000);
+    controlsTimeout = setTimeout(hideControls, 3000);
 
 
 };
 
 
 playBtn.addEventListener("click", handlePlayClick);
-muteBtn.addEventListener("click", handleMute);
+muteBtn.addEventListener("click", handleMuteClick);
+
 volumeRange.addEventListener("input", handleInputVolume);
 volumeRange.addEventListener("change", handleChangeVolume);
-video.addEventListener("loadedmetadata", handleLoadedMetadata)
+
+video.addEventListener("loadeddata", handleLoadedMetadata)
 video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("click", handlePlayClick);
+videoContainer.addEventListener("mousemove", handleMouseMove);
+videoContainer.addEventListener("mouseleave", handleMouseLeave);
+
+document.addEventListener("keyup", (event) => {
+    if (event.code === "Space") {
+        handlePlayClick();
+    }
+    event.preventDefault();
+});
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
-video.addEventListener("mousemove", handleMouseMove);
-video.addEventListener("mouseleave", handleMouseLeave);
