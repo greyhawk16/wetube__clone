@@ -12,6 +12,7 @@ const fullScreenIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const VideoControls = document.getElementById("VideoControls");
 
+console.log(videoContainer.dataset);
 
 let controlsTimeout = null;
 let controlsMovementTimeout = null;
@@ -126,9 +127,16 @@ const handleMouseMove = () => {
 
 const handleMouseLeave = () => {
     controlsTimeout = setTimeout(hideControls, 3000);
-
-
 };
+
+
+const handleEnded = () => {
+    const { id } = videoContainer.dataset;
+    fetch(`/api/videos/${id}/view`, {
+        method: "POST",
+    });
+}
+
 
 
 playBtn.addEventListener("click", handlePlayClick);
@@ -140,6 +148,7 @@ volumeRange.addEventListener("change", handleChangeVolume);
 video.addEventListener("loadeddata", handleLoadedMetadata)
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("click", handlePlayClick);
+video.addEventListener("ended", handleEnded);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 
