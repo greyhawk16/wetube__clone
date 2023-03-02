@@ -59,19 +59,19 @@ const handleDownload = async () => {
 };
 
 
-const handleStop = () => {
-    actionBtn.innerText = "Download Recording";
-    actionBtn.removeEventListener("click", handleStop);
-    actionBtn.addEventListener("click", handleDownload);
+// const handleStop = () => {
+//     actionBtn.innerText = "Download Recording";
+//     actionBtn.removeEventListener("click", handleStop);
+//     actionBtn.addEventListener("click", handleDownload);
 
-    recorder.stop();
-};
+//     recorder.stop();
+// };
 
 
 const handleStart = () => {
-    actionBtn.innerText = "Stop Recording";
+    actionBtn.innerText = "REcording";
+    actionBtn.disabled = true;
     actionBtn.removeEventListener("click", handleStart);
-    actionBtn.addEventListener("click", handleStop);
 
     recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
     recorder.ondataavailable = (event) => {
@@ -80,8 +80,14 @@ const handleStart = () => {
         video.src = videoFile;
         video.loop = true;
         video.play();
+        actionBtn.innerText = "Download";
+        actionBtn.disabled = false;
+        actionBtn.addEventListener("click", handleDownload);
     };
     recorder.start();
+    setTimeout(() => {
+        recorder.stop();
+    }, 5000);
 };
 
 
@@ -90,8 +96,8 @@ const init = async () => {
         {
             audio: false,
             video: {
-                width: 200,
-                height: 100,
+                width: 1024,
+                height: 576,
             },
         });
     video.srcObject = stream;
