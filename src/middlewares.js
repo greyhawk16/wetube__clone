@@ -15,6 +15,7 @@ export const protectorMiddleware = (req, res, next) => {
     if (req.session.loggedIn) {
         return next();
     } else {
+        req.flash("error", "Log in Please");
         return res.redirect("/login");
     }
 };
@@ -24,6 +25,7 @@ export const publicOnlyMiddleware = (req, res, next) => {
     if (!req.session.loggedIn) {
         return next();
     } else {
+        req.flash("error", "You are logged in");
         return res.redirect("/");
     }
 };
