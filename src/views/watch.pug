@@ -19,19 +19,23 @@ block content
             div 
                 span#fullScreen
                     i.fas.fa-expand
-                    
-            //- button#play Play 
-            //- button#mute Mute 
-            //- input(type="range", step="0.1", value=0.5, min="0", max="1")#volume
-            //- div
-            //-     span#currentTime 00:00
-            //-     span  / 
-            //-     span#totalTime 00:00
-            //- div 
-            //-     input(type="range", step="1", value=0, min="0")#timeline
-            //- div 
-            //-     button#fullScreen Enter Full screen
-        
+
+    div.video__data
+        p.video__title=video.title
+        small.video__owner Uploaded by 
+            a(href=`/users/${video.owner._id}`)=video.owner.name
+        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+        if String(video.owner._id) === String(loggedInUser._id)
+            a(href=`${video.id}/edit`) Edit Video &rarr;
+            br
+            a(href=`${video.id}/delete`) Delete Video &rarr;
+
+
+    if loggedIn
+        div.video__comments
+            form.video__comments-form#commentForm
+                textarea(cols="30", rows="10", placeholder="Write a comment")
+                button Add Comment
     //- div 
     //-     p=video.description
     //-     small=video.createdAt
@@ -45,5 +49,6 @@ block content
 
 block scripts 
     script(src="/static/js/videoPlayer.js")
+    script(src="/static/js/commentSection.js")
     //- script(src="/static/js/main.js")
     //- script(src="https://kit.fontawesome.com/b61f10cba4.js")
