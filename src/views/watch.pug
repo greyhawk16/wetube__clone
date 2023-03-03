@@ -34,7 +34,7 @@ block content
     if loggedIn
         div.video__comments
             form.video__comments-form#commentForm
-                textarea(cols="30", rows="10", placeholder="Write a comment")
+                textarea#textarea(cols="30", rows="10", placeholder="Write a comment")
                 button Add Comment
     //- div 
     //-     p=video.description
@@ -49,6 +49,7 @@ block content
 
 block scripts 
     script(src="/static/js/videoPlayer.js")
-    script(src="/static/js/commentSection.js")
+    if loggedIn
+        script(src="/static/js/commentSection.js")
     //- script(src="/static/js/main.js")
     //- script(src="https://kit.fontawesome.com/b61f10cba4.js")

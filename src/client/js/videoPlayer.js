@@ -11,6 +11,7 @@ const fullScreenBtn = document.getElementById("fullScreen");
 const fullScreenIcon = fullScreenBtn.querySelector("i");
 const videoContainer = document.getElementById("videoContainer");
 const VideoControls = document.getElementById("VideoControls");
+const textarea = document.getElementById("textarea");
 
 console.log(videoContainer.dataset);
 
@@ -135,7 +136,7 @@ const handleEnded = () => {
     fetch(`/api/videos/${id}/view`, {
         method: "POST",
     });
-}
+};
 
 
 
@@ -152,11 +153,11 @@ video.addEventListener("ended", handleEnded);
 videoContainer.addEventListener("mousemove", handleMouseMove);
 videoContainer.addEventListener("mouseleave", handleMouseLeave);
 
-document.addEventListener("keyup", (event) => {
-    if (event.code === "Space") {
+document.addEventListener("keypress", (event) => {
+    if (event.code === "Space" && event.target.id !== "textarea") {
         handlePlayClick();
     }
-    event.preventDefault();
 });
+
 timeline.addEventListener("input", handleTimelineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
