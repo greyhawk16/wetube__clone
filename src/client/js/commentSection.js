@@ -11,9 +11,7 @@ const handleSubmit = (event) => {
     const text = textarea.value;
     fetch(`/api/videos/${videoId}/comment`, {
         method: "POST",
-        body: {
-            text,
-        },
+        body: text,
     });
 };
 
