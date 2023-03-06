@@ -3,7 +3,7 @@ const form = document.getElementById("commentForm");
 
 
 
-const handleSubmit = (event) => {
+const handleSubmit = async (event) => {
     event.preventDefault();
 
     const textarea = form.querySelector("textarea");
@@ -14,7 +14,7 @@ const handleSubmit = (event) => {
         return;
     }
     
-    fetch(`/api/videos/${videoId}/comment`, {
+    await fetch(`/api/videos/${videoId}/comment`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
