@@ -1,5 +1,8 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
+const delteBtn = document.querySelectorAll("#deleteCommentBtn");
+const videoComments = document.querySelector(".video__comments");
+const span2 = document.querySelector(".video__delete");
 
 
 
@@ -17,6 +20,8 @@ const addComment = (text, id) => {
         
     const span2 = document.createElement("span");
     span2.innerText = "❌";
+    span2.className = "video__delete";
+
 
     newComment.appendChild(icon);
     newComment.appendChild(span);
@@ -53,6 +58,23 @@ const handleSubmit = async (event) => {
 };
 
 
+
+const handleDelete = async (event) => {
+    const { id, videoId } = event.target.dataset;
+    const response = await fetch(`/api/comments/${commentId}/delete`, {
+        method: "DELETE",
+    });
+
+    if (response.status === 201) {
+        console.log(e.target.parentElement);
+        const comment = e.target.parentElement;
+        comment.remove();
+    }
+};
+
+
 if (form) {
     form.addEventListener("submit", handleSubmit);
+    span2.addEventListener("click", handleDelete);
 }
+
