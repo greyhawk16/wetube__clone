@@ -31,4 +31,22 @@
         color: black;
         margin-top: 10px;
     }
+    .video__delete {
+        cursor: pointer;
+    }
 }
+
+
+.hidden {
+    animation: fadeout 0.5s;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes fadeout {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }

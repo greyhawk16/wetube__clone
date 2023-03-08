@@ -1,8 +1,11 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-const delteBtn = document.querySelectorAll("#deleteCommentBtn");
-const videoComments = document.querySelector(".video__comments");
+const textarea = form.querySelector("textarea");
+const btn = form.querySelector("button");
+const videoComment = document.querySelector(".video__comment");
 const span2 = document.querySelector(".video__delete");
+
+// 숙제 ref: https://github.com/Namyunha/wetube/commit/f321066bc175f1a63e8a45a58dda35dace5674d7
 
 
 
@@ -60,13 +63,13 @@ const handleSubmit = async (event) => {
 
 
 const handleDelete = async (event) => {
-    const { id, videoId } = event.target.dataset;
+    const commentId = videoComment.dataset.id;
     const response = await fetch(`/api/comments/${commentId}/delete`, {
         method: "DELETE",
     });
 
     if (response.status === 201) {
-        console.log(e.target.parentElement);
+        // console.log(e.target.parentElement);
         const comment = e.target.parentElement;
         comment.remove();
     }

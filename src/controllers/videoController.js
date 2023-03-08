@@ -188,12 +188,13 @@ export const deleteComment = async (req, res) => {
 
     const comment = await Comment.findById(id);
     if (!comment) {
-        return res.sendStatus(404);
-    }
-    console.log(comment);
-
+        req.flash("error", "We've looked everywhere, but couldn't find the comment");
+        return res.status(403).redirect("/");
+      }
+    // console.log(comment);
+    
     if (String(comment.owner._id) !== String(_id)) {
-        req.flash("error", "Not the writer of this comment.");
+        req.flash("error", "You are not the owner of video.");
         return res.status(403).redirect("/");
     }
 
@@ -206,5 +207,6 @@ export const deleteComment = async (req, res) => {
     const video = await Video.findById(comment.video);
     video.comments.pop(id);
     video.save();
-    return res.sendStatus(200);
+
+    return res.sendStatus(201);
 };
