@@ -13,6 +13,7 @@
     "build:assets": "webpack --mode=production",
     "dev:server": "nodemon",
     "dev:assets": "webpack --mode=development -w"
+
   },
   "author": "",
   "license": "greyhawk16 in GitHub",
