@@ -1,13 +1,12 @@
-# fly.toml file generated for hidden-glade-5524 on 2023-03-13T08:56:16+09:00
+# fly.toml file generated for lively-darkness-2528 on 2023-03-15T07:15:43+09:00
 
-app = "hidden-glade-5524"
+app = "lively-darkness-2528"
 kill_signal = "SIGINT"
 kill_timeout = 5
-primary_region = "nrt"
+primary_region = "lax"
 processes = []
 
 [env]
-  PORT = "8080"
 
 [experimental]
   auto_rollback = true
