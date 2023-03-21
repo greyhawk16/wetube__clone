@@ -64,3 +64,4 @@ export const videoUpload =
         },
         storage: multerUploader,
     });
+    // AWS bucket 에 프로필 사진이 안올라옴
