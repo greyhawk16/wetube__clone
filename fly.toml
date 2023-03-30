@@ -1,6 +1,6 @@
-# fly.toml file generated for lively-darkness-2528 on 2023-03-15T07:15:43+09:00
+# fly.toml file generated for fragrant-dream-6406 on 2023-03-28T06:47:54+09:00
 
-app = "lively-darkness-2528"
+app = "fragrant-dream-6406"
 kill_signal = "SIGINT"
 kill_timeout = 5
 primary_region = "lax"
